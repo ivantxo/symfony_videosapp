@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
 {% endblock %}
 
+{% block menu %}{% endblock %}
+
 {% block main %}
     <form method="POST" action="#" class="form-signin">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
@@ -20,3 +22,5 @@
         <p class="mt-5 mb-3 text-muted">&copy; 2017-2018 <a href="index.html.twig">main page</a></p>
     </form>
 {% endblock %}
+
+{% block footer_links %}{% endblock %}
