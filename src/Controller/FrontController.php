@@ -27,7 +27,8 @@ class FrontController extends AbstractController {
 	 * @Route("/video-list/category/{categoryname},{id}", name="video_list")
 	 */
 	public function video_list($id, CategoryTreeFrontPage $categories): Response {
-		dump($categories);
+		$sub_categories = $categories->build_tree($id);
+		dump($sub_categories);
 		return $this->render('front/video_list.html.twig');
 	}
 
