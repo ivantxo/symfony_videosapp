@@ -11,10 +11,6 @@ abstract class CategoryTreeAbstract {
 
 	protected static $db_connection;
 
-	private EntityManagerInterface $entity_manager;
-
-	private UrlGeneratorInterface $url_generator;
-
 	public function __construct(EntityManagerInterface $entity_manager, UrlGeneratorInterface $url_generator) {
 		$this->entity_manager = $entity_manager;
 		$this->url_generator = $url_generator;
@@ -31,8 +27,8 @@ abstract class CategoryTreeAbstract {
 			$conn = $this->entity_manager->getConnection();
 			$sql = 'SELECT * FROM categories';
 			$stmt = $conn->prepare($sql);
-			$stmt->executeQuery();
-			return self::$db_connection = $stmt->fetchAll();
+			$result_set = $stmt->executeQuery();
+			return self::$db_connection = $result_set->fetchAllAssociative();
 		}
 	}
 }
