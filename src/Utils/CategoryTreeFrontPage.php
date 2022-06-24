@@ -17,10 +17,11 @@ class CategoryTreeFrontPage extends CategoryTreeAbstract {
 					'id' => $value['id']
 				]
 			);
-			$this->category_list .= '<li>' . '<a href="' . $url . '">' . $category_name . '</a></li>';
+			$this->category_list .= '<li>' . '<a href="' . $url . '">' . $category_name . '</a>';
 			if (!empty($value['children'])) {
 				$this->get_category_list($value['children']);
 			}
+			$this->category_list .= '</li>';
 		}
 		$this->category_list .= '</ul>';
 		return $this->category_list;
