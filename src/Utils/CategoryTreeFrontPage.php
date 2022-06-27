@@ -29,14 +29,15 @@ class CategoryTreeFrontPage extends CategoryTreeAbstract {
 	public function get_category_list(array $categories_array) {
 		$this->category_list .= $this->html_1;
 		foreach ($categories_array as $value) {
-			$category_name = $this->slugger->slugify($value['name']);
+			$category_name_slugified = $this->slugger->slugify($value['name']);
 			$url = $this->url_generator->generate(
 				'video_list',
 				[
-					'categoryname' => $category_name,
+					'categoryname' => $category_name_slugified,
 					'id' => $value['id']
 				]
 			);
+			$category_name = $value['name'];
 			$this->category_list .= $this->html_2 . $this->html_3 . $url . $this->html_4 . $category_name . $this->html_5;
 			if (!empty($value['children'])) {
 				$this->get_category_list($value['children']);
