@@ -13,8 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Category {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -25,7 +25,8 @@ class Category {
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="subcategories")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="subcategories")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $parent;
 
