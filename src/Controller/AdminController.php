@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Utils\CategoryTreeAdminList;
+use App\Utils\CategoryTreeAdminOptList;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,5 +74,15 @@ class AdminController extends AbstractController {
 	 */
 	public function edit_category(): Response {
 		return $this->render('admin/edit_category.html.twig');
+	}
+
+	public function get_all_categories(CategoryTreeAdminOptList $categories) {
+		$categories->get_category_list($categories->build_tree());
+		return $this->render(
+			'admin/_all_categories.html.twig',
+			[
+				'categories' => $categories
+			]
+		);
 	}
 }
