@@ -1,4 +1,15 @@
+{% if edited_category.parent is defined and edited_category.parent == null %}
+	{% set selected = 'selected' %}
+{% else %}
+	{% set selected = '' %}
+{% endif %}
+<option {{ selected }} value="0">No parent</option>
 <option selected value="0">No parent</option>
 {% for category in categories.category_list %}
-	<option value="{{ category.id }}">{{ category.name }}</option>
+	{% if edited_category.parent.getId() is defined and edited_category.parent.getId() == category.id %}
+		{% set selected = 'selected' %}
+	{% else %}
+		{% set selected = '' %}
+	{% endif %}
+	<option {{ selected}} value="{{ category.id }}">{{ category.name }}</option>
 {% endfor %}
