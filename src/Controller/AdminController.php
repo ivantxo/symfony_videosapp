@@ -39,13 +39,17 @@ class AdminController extends AbstractController {
 		$category = new Category();
 		$form = $this->createForm(CategoryType::class, $category);
 		$form->handleRequest($request);
+		$is_invalid = '';
 		if ($form->isSubmitted() && $form->isValid()) {
 			dd('valid');
+		} else if ($request->isMethod('post')) {
+			$is_invalid = ' is-invalid';
 		}
 
 		return $this->render('admin/categories.html.twig', [
 			'categories' => $categories->category_list,
 			'form' => $form->createView(),
+			'is_invalid' => $is_invalid,
 		]);
 	}
 
