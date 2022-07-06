@@ -41,7 +41,15 @@ class AdminController extends AbstractController {
 		$form->handleRequest($request);
 		$is_invalid = '';
 		if ($form->isSubmitted() && $form->isValid()) {
-			dd('valid');
+			$category->setName($request->request->get('category')['name']);
+
+			$repository = $this->doctrine->getRepository(Category::class);
+			$parent = $repository->find($request->request->get('category')['parent']);
+			$category->setParent($parent);
+			$entity_manager = $this->doctrine->getManager();
+			$entity_manager->persist($category);
+			$entity_manager->flush();
+			return $this->redirectToRoute('categories');
 		} else if ($request->isMethod('post')) {
 			$is_invalid = ' is-invalid';
 		}
