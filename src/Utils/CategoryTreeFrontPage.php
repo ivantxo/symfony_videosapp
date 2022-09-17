@@ -60,4 +60,15 @@ class CategoryTreeFrontPage extends CategoryTreeAbstract {
 			];
 		}
 	}
+
+	public function getChildIds(int $parent): array {
+		static $ids = [];
+		foreach ($this->categories_array_from_db as $value) {
+			if ($value['parent_id'] == $parent) {
+				$ids[] = $value['id'] . ',';
+				$this->getChildIds($value['id']);
+			}
+		}
+		return $ids;
+	}
 }
