@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Video>
@@ -16,9 +17,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class VideoRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+	private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Video::class);
+		$this->paginator = $paginator;
     }
 
     public function add(Video $entity, bool $flush = false): void
@@ -38,6 +42,13 @@ class VideoRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+	public function findAllPaginated($page)
+	{
+		$dbQuery = $this->createQueryBuilder('v')
+			->getQuery();
+		return $this->paginator->paginate($dbQuery, $page, 5);
+	}
 
 //    /**
 //     * @return Video[] Returns an array of Video objects
