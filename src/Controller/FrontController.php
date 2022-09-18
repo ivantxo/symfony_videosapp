@@ -7,6 +7,7 @@ use App\Entity\Video;
 use App\Utils\CategoryTreeFrontPage;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,12 +28,17 @@ class FrontController extends AbstractController {
 	/**
 	 * @Route("/video-list/category/{categoryname},{id}/{page}", defaults={"page": "1"}, name="video_list")
 	 */
-	public function video_list($id, $page, CategoryTreeFrontPage $categories): Response {
+	public function video_list(
+		$id,
+		$page,
+		CategoryTreeFrontPage $categories,
+		Request $request
+	): Response {
 		$ids = $categories->getChildIds($id);
 		$ids[] = $id;
 		$videos = $this->doctrine
 			->getRepository(Video::class)
-			->findByChildIds($ids, $page);
+			->findByChildIds($ids, $page, $request->get('sortby'));
 		$categories->get_category_list_and_parent($id);
 		return $this->render('front/video_list.html.twig',
 			[
