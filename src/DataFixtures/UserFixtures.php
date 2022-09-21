@@ -40,6 +40,7 @@ class UserFixtures extends Fixture
 			['Ronaldo', 'Nazairo Lima', 'ronaldo@test.com', 'passwd', 'pass135', ['ROLE_ADMIN']],
 			['Ronaldinho', 'de Asis Moreira', 'dinho@test.com', 'passwd', 'pass135', ['ROLE_ADMIN']],
 			['Lionel', 'Messi', 'messi@test.com', 'passwd', 'pass135', ['ROLE_ADMIN']],
+			['James', 'Rodriguez', 'james@test.com', 'passwd', 'pass135', ['ROLE_USER']],
 		];
 	}
 }
