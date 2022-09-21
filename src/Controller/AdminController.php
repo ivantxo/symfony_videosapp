@@ -32,7 +32,7 @@ class AdminController extends AbstractController {
     }
 
 	/**
-	 * @Route("/categories", name="categories", methods={"GET", "POST"})
+	 * @Route("/su/categories", name="categories", methods={"GET", "POST"})
 	 */
 	public function categories(CategoryTreeAdminList $categories, Request $request): Response {
 		$categories->get_category_list($categories->build_tree());
@@ -57,7 +57,7 @@ class AdminController extends AbstractController {
 	}
 
 	/**
-	 * @Route("/edit_category/{id}", name="edit_category", methods={"GET", "POST"})
+	 * @Route("/su/edit_category/{id}", name="edit_category", methods={"GET", "POST"})
 	 */
 	public function edit_category(Category $category, Request $request): Response {
 		$form = $this->createForm(CategoryType::class, $category);
@@ -79,7 +79,7 @@ class AdminController extends AbstractController {
 	}
 
 	/**
-	 * @Route("/delete_category/{id}", name="delete_category")
+	 * @Route("/su/delete_category/{id}", name="delete_category")
 	 */
 	public function delete_category(Category $category): Response {
 		$entity_manager = $this->doctrine->getManager();
@@ -110,6 +110,7 @@ class AdminController extends AbstractController {
 	}
 
 	public function get_all_categories(CategoryTreeAdminOptList $categories, $edited_category = null) {
+		$this->denyAccessUnlessGranted('ROLE_ADMIN');
 		$categories->get_category_list($categories->build_tree());
 		return $this->render(
 			'admin/_all_categories.html.twig',
