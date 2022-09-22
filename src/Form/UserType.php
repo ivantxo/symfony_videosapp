@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,8 +18,8 @@ class UserType extends AbstractType
         $builder
 			->add('name', TextType::class)
 			->add('last_name', TextType::class)
-            ->add('email', Email, EmailType::class)
-            ->add('password', RepeatedType::class, ['type' => PasswordType])
+            ->add('email',EmailType::class)
+            ->add('password', RepeatedType::class, ['type' => PasswordType::class])
         ;
     }
 

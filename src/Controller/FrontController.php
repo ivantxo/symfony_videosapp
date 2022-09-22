@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Entity\User;
+use App\Form\UserType;
 
 class FrontController extends AbstractController {
 	private ManagerRegistry $doctrine;
@@ -86,8 +88,16 @@ class FrontController extends AbstractController {
 	/**
 	 * @Route("/register", name="register")
 	 */
-	public function register(): Response {
-		return $this->render('front/register.html.twig');
+	public function register(Request $request): Response {
+		$user = new User();
+		$form = $this->createForm(UserType::class, $user);
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			dd('Register new user');
+		}
+		return $this->render('front/register.html.twig', [
+			'form' => $form->createView(),
+		]);
 	}
 
 	/**
